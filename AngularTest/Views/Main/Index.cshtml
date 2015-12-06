@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Items</title>
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/angular.js")
+    @Scripts.Render("~/Scripts/angular-animate.min.js")
+    @Scripts.Render("~/Scripts/angular-ui/ui-bootstrap.min.js")
+    @Scripts.Render("~/Scripts/angular-ui/ui-bootstrap-tpls.min.js")
+    @Scripts.Render("~/Scripts/MainScript.js")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/bootstrap.min.css")
+</head>
+<body>
+    <div class="container body-content">
+        <div ng-app="menuItemApp" ng-controller="menuItemCtrl">
+            <h2>Manage Menu Items</h2>
+            <uib-tabset>
+                <uib-tab heading="Edit">
+                    <table>
+                        <tr>
+                            <td>Name:</td>
+                            <td><input ng-model="newMenuItem.Name" /></td>
+                        </tr>
+                        <tr>
+                            <td>Price:</td>
+                            <td><input ng-model="newMenuItem.Price" /></td>
+                        </tr>
+                        <tr>
+                            <td>Cost:</td>
+                            <td><input ng-model="newMenuItem.Cost" /></td>
+                        </tr>
+                        <tr>
+                            <td>Image URL:</td>
+                            <td><input ng-model="newMenuItem.ImageURL" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button ng-click="add()">Add</button>
+                            </td>
+                        </tr>
+                    </table>
+                </uib-tab>
+                <uib-tab heading="List">
+                    <ul>
+                        <li ng-repeat="x in menuItems">
+                            {{x.ID +' '+ x.Name +' ' }} {{x.Price | currency}} <img class="menuItemImage" src="{{x.ImageURL}}" ng-if="x.ImageURL" />
+                        </li>
+                    </ul>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/Scripts/angular.js")
+@Scripts.Render("~/Scripts/angular-animate.min.js")
+@Scripts.Render("~/Scripts/angular-ui/ui-bootstrap.min.js")
+@Scripts.Render("~/Scripts/angular-ui/ui-bootstrap-tpls.min.js")
+@Scripts.Render("~/Scripts/MainScript.js")
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/bootstrap.min.css")
+
+<div id="test5" ng-app="Test5" ng-controller="customersCtrl" ng-cloak><!--ng-cloak prevents the screen from flickering angular {{curlybraces}}-->
+
+    <h1>{{Title}}</h1>
+    <h2 ng-bind="Title2"></h2>
+    <ul>
+        <li ng-repeat="x in names">
+            {{ x.Name + 'From: ' + x.City + ', ' + x.Country }}
+        </li>
+    </ul>
+
+</div>
+
+<div id="test4" ng-app="Test4" ng-controller="myCtrl4">
+    <h1>Directives</h1>
+    <p>Filter: <input ng-model="test"/></p>
+    <ul>
+        <li ng-repeat="x in names | filter: test">
+            {{ x }}
+        </li>
+    </ul>
+    <ul>
+        <li ng-repeat="x in objects | orderBy:'FirstName'">
+            {{ x.FirstName + " " + x.LastName }}
+        </li>
+    </ul>
+</div>
+
+<div id="test3" ng-app="Test3" ng-controller="myCtrl3">
+    <h1>Expressions</h1>
+    First Name: <input type="text" ng-model="firstName" /><br />
+    Last Name: <input type="text" ng-model="lastName" /><br />
+    <br />
+    Full Name {{firstName + " " + lastName}}
+    <br />
+    Quantity * Cost = {{ quantity * cost}}
+    <br />
+    myObject.height {{myObject.height}}
+    <br />
+    myObject.face.eyes {{myObject.face.eyes}}
+    <br />
+</div>
+
+<div ng-app="" ng-init="firstName='Arf'">
+    <h1>Intro 2</h1>
+    <p>Name : <input type="text" ng-model="name" /></p>
+    <p ng-bind="name"></p>
+
+    <p>The name is <span ng-bind="firstName"></span></p>
+
+    <p>My first expression {{ 5+5 }}</p>
+</div>
+
+
+<div ng-app="">
+    <h1>Intro 1</h1>
+    <p>Name : <input type="text" ng-model="name" /></p>
+    <h1>Hello {{name}}</h1>
+</div>
+
+<div id="testx" ng-app="Testx" ng-controller="myCtrlx">
+    <p><input type="text" ng-model="employee.firstName" /></p>
+    <p><input type="text" ng-model="employee.lastName" /></p>
+    <p><input type="number" ng-model="employee.salary" /></p>
+</div>
+<script>
+    //TEST5 Data from web server
+    var app5 = angular.module('Test5', []);
+    app5.controller('customersCtrl', function ($scope, $http) {
+        $scope.Title = "Names from HTTP";
+        $scope.Title2 = "Binding vs { curly braces";
+        $http.get("http://www.w3schools.com/angular/customers.php")
+        .success(function (response) { $scope.names = response.records; });
+    });
+    //angular.bootstrap(document.getElementById("test5"), ['Test5']);
+    //TEST4
+    var app4 = angular.module('Test4', []);
+    app4.controller('myCtrl4', function ($scope) {
+        $scope.names = ["John", 'Andy', 'Reggie'];
+        $scope.objects = [{ FirstName: 'Ken', LastName: 'Jennings' }, { FirstName: 'Alex', LastName: 'Scriven' }, { FirstName: 'Jesse', LastName: 'Varga' }];
+    });
+    angular.bootstrap(document.getElementById("test4"), ['Test4']);
+    //TEST3
+    var app3 = angular.module('Test3', []);
+    app3.controller('myCtrl3', function ($scope) {
+        $scope.firstName = "John";
+        $scope.lastName = "Doe";
+        $scope.quantity = 10;
+        $scope.cost = 50;
+        $scope.myObject = { face: { eyes: 'Blue', hair: 'Blonde' }, height: 5 }
+    });
+    angular.bootstrap(document.getElementById("test3"), ['Test3']);
+    //TESTX
+    var appx = angular.module('Testx', []);
+    appx.controller('myCtrlx', function ($scope) {
+        $scope.employee = { firstName: 'Alex', lastName: 'Scriven', salary: 20.50 };
+    });
+    //You gotta bootstrap any additional ng-app's because you gotta,
+    //  only one angular js can automatically be bootstrapped per html document
+    //  the first ng-app found in the document will be the one auto-bootstrapped
+    angular.bootstrap(document.getElementById("testx"), ['Testx']);
+</script>
